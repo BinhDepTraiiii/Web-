@@ -1,4 +1,25 @@
 body {
-    font-family: Times New Roman, serif;
+    font-family: Times , serif;
     margin: 20px;
+    background-color: #2ca5c3;
+}
+#add-product {
+    background-color: red;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 0;
+    color: white;
+    cursor: pointer;
+    border: none;
+    flex-shrink: 0;
+}
+.form-row button:hover {
+    background-color: #ff4d4d;
+}
+#delete-product {
+    background-color: black;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
 }

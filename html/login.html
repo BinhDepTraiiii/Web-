@@ -2,17 +2,24 @@
 <html>
 <head>
 <title>Quản lý kho hàng </title>
-<link rel = "stylesheet" href = "style.css">
+<link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 <h1>Quản lý kho hàng</h1>
-<input type="text" placeholder="Tên sản phẩm "id = "product-name">
-<input type="text" placeholder="Mã sản phẩm " id = "product-code">
-<input type ="text " placeholder = "Số lượng " id = "quantity">
-<input type="text" placeholder="Giá tiền " id = "price"> 
-<button id = "add-product">Thêm sản phẩm</button>  <!-- Tạo nút thêm sản phẩm -->
-<table boder = "1"> 
+<div class="form-row">
+  <input type="text" placeholder="Tên sản phẩm" id="product-name">
+  <input type="text" placeholder="Mã sản phẩm" id="product-code">
+  <input type="text" placeholder="Số lượng" id="quantity">
+  <input type="text" placeholder="Giá tiền" id="price">
+  <button id="add-product" class="add-product">Thêm sản phẩm</button>
+</div>
+<div class = "delete-row">
+    <button id="delete-product">Xóa sản phẩm</button>
+</div>
+    
+</div>
+<table border="1">
     <thead>
     <tr> 
         <th>Tên sản phẩm</th>
@@ -24,6 +31,6 @@
     <tbody id = "productList">
     </tbody>
 </table>
-<sripct src = "script.js"></script>
+<script src="../js/script.js"></script>
 </body>
 </html>
