@@ -2,6 +2,7 @@ body {
     font-family: Times , serif;
     margin: 20px;
     background-color: #2ca5c3;
+    opacity : 0.8;
 }
 #add-product {
     background-color: red;
