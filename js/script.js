@@ -1,12 +1,14 @@
 const addBtn = document.getElementById('add-product'); // lấy phần tử nút Thêm sản phẩm
 const productListEl = document.getElementById('productList'); 
+const searchInput= document.getElementById('search');
+let product = JSON.parse(localStorage.getItem('product')) || [];
 addBtn.addEventListener('click' , function () {
     const Name = document.getElementById('product-name').value; 
     const Codeproduct = document.getElementById('product-code').value;
     const Price = document.getElementById('price').value;
-    const Quanity = document.getElementById('quantity').value;
+    const Quantity = document.getElementById('quantity').value;
     // Kiểm tra điền đủ thông tin 
-    if ( Name === '' || Codeproduct === '' || Price === '' || Quanity === '') {
+    if ( Name === '' || Codeproduct === '' || Price === '' || Quantity === '') {
         alert ("Bạn không được để trống ");
         return;
     }
@@ -14,16 +16,17 @@ addBtn.addEventListener('click' , function () {
         alert("Giá phải là số dương ");
         return;
     }
-    if ( isNaN(Quanity) || Number(Quanity) <= 0 ) {
-        alert("Số lượng phải là số dương ");
+    if ( isNaN(Quantity) || Number(Quantity) <= 0 ) {
+        alert("Số lượng phải là số và lớn hơn 0 ");
         return;
     }
     product.push({
         name: Name,
         code: Codeproduct,
         price: Price,
-        quantity: Quanity
+        quantity: Quantity
     });
+    sortProducts();
     saveProduct();
     renderProduct();
     clearForm();
@@ -42,8 +45,8 @@ productListEl.addEventListener('click', function (event) {
 });
 
 renderProduct();
+setupSearch();
 // Lưu dữ liệu sản phẩm vào localStorage
-let product = JSON.parse(localStorage.getItem('product')) || [];
 function saveProduct() {
     localStorage.setItem('product', JSON.stringify(product));
 }
@@ -54,7 +57,18 @@ function clearForm() {
     document.getElementById('price').value = '';
     document.getElementById('quantity').value = '';
 }
+function sortProducts() {
+    product.sort((a, b) => 
+    {
+        const aNum = Number(a.code);
+        const bNum = Number(b.code);
+        if (!isNaN(aNum) && !isNaN(bNum)) {
+            return aNum - bNum; // Sắp xếp theo số nếu cả hai đều là số
+        }
+    });
+}
 function renderProduct() {
+    sortProducts();
     const productListEl = document.getElementById('productList');
     productListEl.innerHTML = '';
     product.forEach((item, index) => {
@@ -62,9 +76,26 @@ function renderProduct() {
         row.innerHTML = `
         <td>${item.name}</td>
         <td>${item.code}</td>
-        <td>${item.price}</td>
         <td>${item.quantity}</td>
+        <td>${item.price}</td>
         <td><button class="delete-btn" data-index="${index}">Xóa</button></td>`;
         productListEl.appendChild(row);
+    });
+}
+function setupSearch() {
+    const searchBtn = document.getElementById('search-product');
+    searchBtn.addEventListener('click', function () {
+        const keyword = searchInput.value.toLowerCase(); // Tránh lỗi chữ hoa và chữ thường 
+        const rows = document.querySelectorAll('#productList tr');
+        rows.forEach(row => {
+            const name = row.children[0].textContent.toLowerCase(); // Lấy tên sản phẩm và chuyển về chữ thường
+            if (name.includes(keyword)) {
+                row.style.display = ''; // Hiển thị hàng nếu có chứa từ khóa
+            }
+            else
+            {
+                row.style.display = 'none'; // Ẩn hàng nếu không chứa từ khóa
+            }
+        });
     });
 }
